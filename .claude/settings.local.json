@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx -y @nestjs/cli new backend --package-manager npm --skip-git --strict=false)",
+      "Bash(npx -y create-next-app@latest frontend --ts --tailwind --eslint --app --src-dir --use-npm --import-alias \"@/*\" --no-turbopack --yes)",
+      "Bash(rm -rf frontend/.git)",
+      "Bash(npx -y @nestjs/cli new backend --package-manager npm --skip-git)",
+      "Bash(npx -y shadcn@latest add table input badge select checkbox dialog sonner popover calendar -y)",
+      "Bash(npm uninstall *)",
+      "Bash(python3 -)",
+      "Bash(npx tsc *)",
+      "Bash(curl -s localhost:4000/event)",
+      "Bash(lsof -nP -iTCP:3000 -iTCP:4000 -sTCP:LISTEN)",
+      "Bash(awk '{print $1,$2,$9}')",
+      "Bash(sed -i 's|/\\\\*\\\\* Stores several events with a single file write; all share one request timestamp order. \\\\*/|/** Stores several events with a single file write. */|' backend/src/events/events.service.ts)",
+      "Bash(sed -i 's#| POST | `/event` | store any JSON body → `{ id, createdAt, body }` |#| POST | `/event` | store any JSON body → `{ id, createdAt, body }`. Send a JSON array to store a batch \\(each item becomes an event, returns an array\\) |#' README.md)",
+      "Bash(npm run *)"
+    ]
+  }
+}

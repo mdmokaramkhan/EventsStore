@@ -1,0 +1,75 @@
+@host = http://localhost:4000
+
+### Create a single event (body can be any JSON)
+POST {{host}}/event
+Content-Type: application/json
+
+{
+  "type": "app_open",
+  "session": "sess-1001",
+  "deviceId": "device-abc-123",
+  "appVersion": "2.4.1",
+  "priority": "p1",
+  "platform": "ios",
+  "user": { "id": 42, "plan": "pro" }
+}
+
+### Create a different-shaped event
+POST {{host}}/event
+Content-Type: application/json
+
+{
+  "type": "payment_failed",
+  "session": "sess-1002",
+  "device-id": "device-xyz-789",
+  "appVersion": "2.3.9",
+  "priority": "p0",
+  "amount": 49.99,
+  "error": { "code": 504, "message": "gateway timeout" }
+}
+
+### Create multiple events in one request (batch: send a JSON array)
+POST {{host}}/event
+Content-Type: application/json
+
+[
+  {
+    "type": "screen_view",
+    "session": "sess-2001",
+    "deviceId": "device-001",
+    "appVersion": "2.4.1",
+    "priority": "p2",
+    "screen": "home"
+  },
+  {
+    "type": "button_click",
+    "session": "sess-2001",
+    "deviceId": "device-001",
+    "appVersion": "2.4.1",
+    "priority": "p2",
+    "button": "buy"
+  },
+  {
+    "type": "crash",
+    "session": "sess-2002",
+    "deviceId": "device-002",
+    "appVersion": "2.4.0",
+    "priority": "p0",
+    "stack": "TypeError: x is undefined"
+  }
+]
+
+### List all events
+GET {{host}}/event
+
+### Get one event (replace the id)
+GET {{host}}/event/REPLACE_WITH_ID
+
+### Delete one event (replace the id)
+DELETE {{host}}/event/REPLACE_WITH_ID
+
+### Delete several events
+DELETE {{host}}/event?ids=ID_1,ID_2
+
+### Clear all events
+DELETE {{host}}/event
