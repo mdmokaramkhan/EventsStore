@@ -14,7 +14,9 @@
       "Bash(awk '{print $1,$2,$9}')",
       "Bash(sed -i 's|/\\\\*\\\\* Stores several events with a single file write; all share one request timestamp order. \\\\*/|/** Stores several events with a single file write. */|' backend/src/events/events.service.ts)",
       "Bash(sed -i 's#| POST | `/event` | store any JSON body → `{ id, createdAt, body }` |#| POST | `/event` | store any JSON body → `{ id, createdAt, body }`. Send a JSON array to store a batch \\(each item becomes an event, returns an array\\) |#' README.md)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(sed -i '' 's|\"dev\": \"next dev\"|\"dev\": \"next dev -p 4002\"|; s|\"start\": \"next start\"|\"start\": \"next start -p 4002\"|' package.json)",
+      "Read(//Users/mdmukrramkhan/Desktop/Projects/**)"
     ]
   }
 }

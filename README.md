@@ -1,6 +1,6 @@
 # EventsStore
 
-NestJS backend (port 4000) stores events in `backend/data/events.json`; Next.js + shadcn frontend (port 3000) shows them.
+NestJS backend (port 4000) stores events in `backend/data/events.json`; Next.js + shadcn frontend (port 4002) shows them.
 
 ```
 npm run install:all   # once
