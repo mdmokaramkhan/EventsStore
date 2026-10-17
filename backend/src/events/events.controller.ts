@@ -4,16 +4,29 @@ import { EventsService } from './events.service.js';
 const isEmpty = (v: unknown) =>
   v === undefined || v === null || (typeof v === 'object' && Object.keys(v).length === 0);
 
+const isWrappedBatch = (v: unknown): v is { events: any[]; [k: string]: unknown } =>
+  typeof v === 'object' && v !== null && !Array.isArray(v) && Array.isArray((v as any).events);
+
 @Controller('event')
 export class EventsController {
   constructor(private readonly events: EventsService) {}
 
   /**
    * Store any JSON body as an event.
-   * Send a JSON array to store a batch: every element becomes its own event.
+   * Batches become one stored event per item:
+   *  - a JSON array: every element is an event
+   *  - { ...batchFields, events: [...] }: every item in `events` is an event, with the
+   *    other top-level fields (e.g. batch_id, sent_at) copied into each one
    */
   @Post()
   create(@Body() body: unknown) {
+    if (isWrappedBatch(body)) {
+      const { events, ...batchFields } = body;
+      if (events.length === 0) throw new BadRequestException('Batch must contain at least one event');
+      const bad = events.findIndex((e) => isEmpty(e) || typeof e !== 'object' || Array.isArray(e));
+      if (bad !== -1) throw new BadRequestException(`events[${bad}] must be a non-empty JSON object`);
+      return this.events.createMany(events.map((e) => ({ ...batchFields, ...e })));
+    }
     if (Array.isArray(body)) {
       const bad = body.findIndex(isEmpty);
       if (body.length === 0) throw new BadRequestException('Batch must contain at least one event');

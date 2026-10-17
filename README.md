@@ -10,7 +10,7 @@ npm run dev           # runs both
 ## API
 | Method | Path | |
 |---|---|---|
-| POST | `/event` | store any JSON body → `{ id, createdAt, body }`. Send a JSON array to store a batch: each item becomes its own event and an array is returned |
+| POST | `/event` | store any JSON body → `{ id, createdAt, body }`. Batches are split into one stored event per item and an array is returned: send a JSON array, or `{ "batch_id": "...", "events": [...] }` (the other top-level fields are copied into every item) |
 | GET | `/event` | list all (newest first) |
 | GET | `/event/:id` | one event |
 | DELETE | `/event/:id` | delete one |
